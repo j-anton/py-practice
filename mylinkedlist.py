@@ -14,8 +14,8 @@ class LList(object):
         self.tail = None
 
         if value != None:
-            tmp = Node(value)
-            self.head = self.tail = tmp 
+            new_node = Node(value)
+            self.head = self.tail = new_node 
 
     def printllistf(self):
         ptr = self.head
