@@ -31,6 +31,7 @@ class Graph(object):
 
     def __init__(self):
         self.graph = []
+        self._dfs_found_flag = False
 
 
     def __str__(self):
@@ -84,7 +85,8 @@ class Graph(object):
         return None
 
     def visit(self, node):
-        print(node.value)
+        if g._dfs_found_flag == False:
+            print(node.value)
         return node.value
         
     def BFS(self, root, value):
@@ -96,34 +98,38 @@ class Graph(object):
 
         while(queue):
             node = queue.pop(0)
-            if g.visit(node) == value: break
+            if g.visit(node) == value:
+                print('{} found.'.format(value))
+                break
             for child in node.children:
                 if child.is_marked() == False:
                     child.mark()
                     queue.append(child)
-        print('{} found, BFS complete\n'.format(value))
+        print('BFS Complete.\n')
         g.clearMarks()
 
 
     def DFS(self, root, value):
         g.clearMarks()
+        g._dfs_found_flag = False
         print('DFS:')
         g._DFS(root, value)
-        print('{} found, DFS complete\n'.format(value))
+        g._dfs_found_flag = False
+        print('{} found.\nDFS complete\n'.format(value))
 
     def _DFS(self,root,value):
-        found = False
         if root == None: return
-        if g.visit(root) == value: return True
+        if g.visit(root) == value: 
+            g._dfs_found_flag = True
+            return True
         root.mark()
         for child in root.children:
             if child.is_marked() == False:
                 if g._DFS(child, value): return
 
 
-
-
 g = Graph()
+"""
 g.add(10, [9,2])
 g.add(9,[1,4])
 g.add(8,[])
@@ -134,12 +140,39 @@ g.add(4,[8,6,2])
 g.add(3,[2,1])
 g.add(2,[1])
 g.add(1,[])
+"""
+
+g.add('a', ['b','d','e','g','i'])
+g.add('b', ['c','d','a'])
+g.add('c', ['b',10])
+g.add('d', ['a','e','b','h'])
+g.add('e',['a','d','f'])
+g.add('f',['g','e','d','j'])
+g.add('g',['a','f'])
+g.add('h',['d','j'])
+g.add('i',['a'])
+g.add('j',['h','f','k'])
+g.add('k',['j','l'])
+g.add('l',['k','m'])
+g.add('m',['l',7])
+g.add(1,[2,4,5,6,8])
+g.add(2,[1,3,7])
+g.add(3,[2])
+g.add(4,[1,12])
+g.add(5,[1,8,11])
+g.add(6,[1,7,8])
+g.add(7,[2,3,6,'m'])
+g.add(8, [1,5,6,9])
+g.add(9,[8,10])
+g.add(10,['c',9])
+g.add(11,[5])
+g.add(12,[4])
 
 print(g)
 
-g.BFS(g.getNode(10), 7)
+g.BFS(g.getNode('a'), 1)
 
-g.DFS(g.getNode(10), 7)
+g.DFS(g.getNode('a'), 1)
 
 g.BFS(g.getNode(10), None)
 
