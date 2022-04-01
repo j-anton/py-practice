@@ -1,3 +1,3 @@
-# py-data-structs-revisit
+# py-practice
 
 Revisiting some basic structures in python. 
